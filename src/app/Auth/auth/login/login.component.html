@@ -1,0 +1,495 @@
+<!-- login
+<div class="container">
+  <div class="p-5">
+
+    <form class="form-login " [formGroup]="formGroup"  (ngSubmit)="loginProces()">
+      <div class="form-group">
+        <label for="email" class="sr-only" >Email address</label>
+        <input  type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required
+        ngModel #email placeholder="Enter email"  formControlName="email">
+
+
+
+
+        <small *ngIf="formGroup.controls?.email?.errors?.email &&
+        formGroup.controls?.email?.touched" class="form-text text-danger">
+          enter valid email
+        </small>
+
+        <small *ngIf="formGroup.controls?.email?.errors?.required &&
+        formGroup.controls?.email?.touched" class="form-text text-danger">
+          email is required
+        </small>
+
+        <small *ngIf="
+        formGroup.controls?.email?.touched &&
+        formGroup.controls?.email?.errors?.minlength"
+          class="form-text text-danger">email
+          must be more than 5 characters .</small>
+      </div>
+        <div class="form-group">
+          <label for="password" class="sr-only" > Password</label>
+          <input ngModel  type="password" id="password" class="form-control"  aria-describedby="passwordHelp" name="password" ngModel
+            placeholder="password" #password formControlName="password" required>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-lg btn-primary" >Submit</button>
+
+        </div>
+    </form>
+
+
+
+  </div>
+</div> -->
+<!-- <div class="center">
+  <div class="container">
+     <label for="show" class="close-btn fas fa-times" title="close"(click)="closeDialog()"></label>
+     <div class="text" (click)="closeDialog()">
+        Login Form
+     </div>
+     <form class="form-login " [formGroup]="formGroup"  (ngSubmit)="loginProces()">
+      <div class="data">
+           <label>Email </label>
+           <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required
+           ngModel #email placeholder="Enter email"  formControlName="email">
+           <span *ngIf="formGroup.controls?.email?.errors?.required &&
+           formGroup.controls?.email?.touched" class="form-text text-danger">
+             email is required<br>
+           </span>
+           <span *ngIf="formGroup.controls?.email?.errors?.minlength &&
+           formGroup.controls?.email?.touched" class="form-text text-danger">
+             at least 5 characters<br>
+           </span>
+           <span *ngIf="formGroup.controls?.email?.errors?.email &&
+           formGroup.controls?.email?.touched" class="form-text text-danger">
+             email not currect <br>
+           </span>
+
+
+        </div>
+        <br>
+        <div class="data">
+           <label>Password</label>
+           <input ngModel  type="password" id="password" class="form-control"  aria-describedby="passwordHelp" name="password" ngModel
+           placeholder="password" #password formControlName="password" required required>
+           <span *ngIf="formGroup.controls?.password?.errors?.required &&
+           formGroup.controls?.password?.touched" class="form-text text-danger">
+             password  is required<br>
+           </span>
+           <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+           formGroup.controls?.password?.touched" class="form-text text-danger">
+             password must be  8 character at least<br>
+           </span>
+           <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+           formGroup.controls?.password?.touched" class="form-text text-danger">
+           maximum characters is 16 <br>
+           </span>
+           <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+           formGroup.controls?.password?.touched" class="form-text text-danger">
+           first character must be captil letter<br>
+           </span>
+
+
+
+        </div>
+        <br>
+        <br>
+        <div class="forgot-pass">
+           <a href="#">Forgot Password?</a>
+        </div>
+        <div class="btn">
+           <div class="inner"></div>
+           <button type="submit">login</button>
+        </div>
+        <div class="signup-link">
+           Not a member? <a href="#" routerLink="./register">Signup now</a>
+        </div>
+     </form>
+  </div>
+</div> -->
+<!-- <form class="form-login " [formGroup]="formGroup" (ngSubmit)="loginProces()">
+  <div class="form-group">
+    <input
+    type="email"
+    class="form-control"
+    placeholder="Your Email *"
+   value=""
+   formControlName="email"
+   name="email"
+   ngModel
+
+   />
+    <span *ngIf="formGroup.controls?.email?.errors?.required &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+      email is required<br>
+    </span>
+    <span *ngIf="formGroup.controls?.email?.errors?.minlength &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+      at least 5 characters<br>
+    </span>
+    <span *ngIf="formGroup.controls?.email?.errors?.email &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+      email not currect <br>
+    </span>
+
+  </div>
+  <div class="form-group">
+    <input
+    type="password"
+    class="form-control"
+    placeholder="Password *"
+    value=""
+    formControlName="password"
+    name="password"
+    ngModel
+    required
+    maxlength="16"
+
+       />
+      <span *ngIf="formGroup.controls?.password?.errors?.required &&
+       formGroup.controls?.password?.touched" class="form-text text-danger">
+         password  is required<br>
+       </span>
+       <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+       formGroup.controls?.password?.touched" class="form-text text-danger">
+         password must be  8 character at least<br>
+       </span>
+       <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+       formGroup.controls?.password?.touched" class="form-text text-danger">
+       maximum characters is 16 <br>
+       </span>
+       <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+       formGroup.controls?.password?.touched" class="form-text text-danger">
+       first character must be captil letter<br>
+       </span>
+       <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+       formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+       passwords not match
+       </span>
+
+
+  </div>
+  <input
+  type="submit"
+  class="btnRegister"
+  value="Register"
+  />
+
+</form> -->
+
+<!-- <form class="form-login   " [formGroup]="formGroup" (ngSubmit)="process()">
+  <div class="cont_principal  h-100 clas w-100">
+
+    <div class="cont_centrar  ">
+      <div class="cont_login  ">
+        <div class="cont_tabs_login ">
+          <ul class='ul_tabs '>
+            <li class="active"><a (click)="sign_in()">SIGN IN</a>
+              <span class="linea_bajo_nom"></span>
+            </li>
+            <li><a (click)="sign_up()">SIGN UP</a><span class="linea_bajo_nom"></span>
+            </li>
+          </ul>
+        </div>
+        <div class="cont_text_inputs ">
+          <input type="text" class="input_form_sign " placeholder="NAME" name="firstName" formControlName="firstName" />
+          <span *ngIf="formGroup.controls?.firstName?.errors?.required &&
+          formGroup.controls?.firstName?.touched" class="form-text text-danger">
+            first name is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.firstName?.errors?.minlength &&
+          formGroup.controls?.firstName?.touched" class="form-text text-danger">
+            first name must be  2 character at least<br>
+          </span>
+          <span *ngIf="formGroup.controls?.firstName?.errors?.maxlength &&
+          formGroup.controls?.firstName?.touched" class="form-text text-danger">
+            first name must be 11 characters<br>
+          </span>
+          <span *ngIf="formGroup.controls?.firstName?.errors?.pattern &&
+          formGroup.controls?.firstName?.touched" class="form-text text-danger">
+            first name must be A-Z characters only  <br>
+          </span>
+
+
+
+          <input type="text" class="input_form_sign " placeholder="NAME" name="lastName" formControlName="lastName" />
+          <span *ngIf="formGroup.controls?.lastName?.errors?.required &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+            last name is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.minlength &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+            last name must be  2 character at least<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.maxlength &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+          last name must be 11 characters<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.pattern &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+          last name must be A-Z characters only  <br>
+          </span>
+
+
+          <input type="email" class="input_form_sign d_block active_inp" placeholder="EMAIL" name="email"
+            formControlName="email" />
+          <span *ngIf="formGroup.controls?.email?.errors?.required &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+            email is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.email?.errors?.minlength &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+            at least 5 characters<br>
+          </span>
+          <span *ngIf="formGroup.controls?.email?.errors?.email &&
+    formGroup.controls?.email?.touched" class="form-text text-danger">
+            email not currect <br>
+          </span>
+
+
+
+
+          <input type="password" class="input_form_sign d_block  active_inp" placeholder="PASSWORD" name="password"
+            formControlName="password" />
+            <span *ngIf="formGroup.controls?.password?.errors?.required &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password  is required<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password must be  8 character at least<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             maximum characters is 16 <br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             first character must be captil letter<br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             passwords not match
+             </span>
+
+
+
+
+
+          <input type="password" class="input_form_sign" placeholder="CONFIRM PASSWORD" name="ConfirmPassword"
+            formControlName="ConfirmPassword" />
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.required &&
+            formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+              ConfirmPassword is required<br>
+            </span>
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.minlength &&
+            formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+              ConfirmPassword must be  8 character at least<br>
+            </span>
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.maxlength &&
+            formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+            maximum characters is 16 <br>
+            </span>
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.invalidPassword &&
+            formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+            first character must be captil letter<br>
+            </span>
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+            formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+            passwords not match
+            </span>
+
+
+
+
+          <input type="date" class="input_form_sign" placeholder="pick your Birthdatae" name="birthdate"
+            formControlName="birthdate" />
+            <span *ngIf="formGroup.controls?.birthdate?.errors?.required &&
+            formGroup.controls?.birthdate?.touched" class="form-text text-danger">
+              birthdate is required<br>
+            </span>
+
+
+
+          <input type="text" class="input_form_sign" placeholder="PhoneNumber" name="phone" formControlName="phone" />
+          <span *ngIf="formGroup.controls?.phone?.errors?.required &&
+          formGroup.controls?.phone?.touched" class="form-text text-danger">
+            phone is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.phone?.errors?.minlength &&
+          formGroup.controls?.phone?.touched" class="form-text text-danger">
+            phone number must be 10 numbers<br>
+          </span>
+          <span *ngIf="formGroup.controls?.phone?.errors?.maxlength &&
+          formGroup.controls?.phone?.touched" class="form-text text-danger">
+          phone number cannot be more than 10 numbers<br>
+          </span>
+          <span *ngIf="formGroup.controls?.phone?.errors?.pattern &&
+          formGroup.controls?.phone?.touched" class="form-text text-danger">
+            phone must be only numbers<br>
+          </span>
+
+
+
+
+          <select
+           formControlName="city"
+           name="city"
+           ngModel
+           class="input_form_sign"
+            aria-placeholder="Select a City *">
+            <option ngValue="null" disabled selected>Select city *</option>
+            <option *ngFor="let c of cities" ngValue="{{c?.name}}">{{c?.name}}</option>
+          </select>
+          <span *ngIf="formGroup.controls?.city?.errors?.required &&
+          formGroup.controls?.city?.touched" class="form-text text-danger">
+            city is required<br>
+          </span>
+
+
+
+
+          <input type="text" class="input_form_sign" placeholder="Enter street name *" value="" formControlName="street"
+            name="streetName" ngModel minlength="2" maxlength="20" />
+          <span *ngIf="formGroup.controls?.street?.errors?.required &&
+        formGroup.controls?.street?.touched" class="form-text text-danger">
+            street is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.street?.errors?.minlength &&
+        formGroup.controls?.street?.touched" class="form-text text-danger">
+            street name cannot be less than 2 characters<br>
+          </span>
+
+          <input type="number" class="input_form_sign" placeholder="Enter Home number *" value=""
+            formControlName="homeNo" name="homenumber" ngModel required />
+          <span *ngIf="formGroup.controls?.homeNo?.errors?.required &&
+           formGroup.controls?.homeNo?.touched" class="form-text text-danger">
+            home number is required<br>
+          </span>
+
+
+
+          <a href="#" class="link_forgot_pass d_block">Forgot Password ?</a>
+          <div class="terms_and_cons d_none">
+            <p><input type="checkbox" name="terms_and_cons" /> <label for="terms_and_cons">Accept Terms and
+                Conditions.</label></p>
+
+          </div>
+        </div>
+        <div class="cont_btn">
+          <button class="btn_sign" type="submit">SIGN IN</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</form>
+
+<script src="/src/assets/script/login.js/login.js"></script>
+ -->
+ <!-- <div class="d-flex justify-content-center">
+
+ <form class="form-login " [formGroup]="formGroup"  (ngSubmit)="loginProces()">
+
+  <div class="group">
+      <input type="email" required formControlName="email" name="email">
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Email</label>
+  </div>
+
+  <div class="group">
+      <input type="password" required formControlName="password" name="password">
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>password</label>
+  </div>
+  <div >
+      <button class="btn btn-outline-danger">login</button>
+  </div>
+</form>
+</div> -->
+<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/src/assets/css/login.css">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 login-section-wrapper">
+      <div class="brand-wrapper">
+        <img src="https://www.linguahouse.com/linguafiles/md5/d01dfa8621f83289155a3be0970fb0cb" alt="logo" class="logo">
+      </div>
+      <div class="login-wrapper my-auto">
+        <h1 class="login-title">Log in</h1>
+        <form class="form-login " [formGroup]="formGroup"  (ngSubmit)="loginProces()">
+          <div class="form-group">
+
+
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control"
+             placeholder="email@example.com " formControlName="email" required>
+             <small *ngIf="formGroup.controls?.email?.errors?.email &&
+             formGroup.controls?.email?.touched" class="form-text text-danger">
+               enter valid email
+             </small>
+
+             <small *ngIf="formGroup.controls?.email?.errors?.required &&
+             formGroup.controls?.email?.touched" class="form-text text-danger">
+               email is required
+             </small>
+
+             <small *ngIf="
+             formGroup.controls?.email?.touched &&
+             formGroup.controls?.email?.errors?.minlength"
+               class="form-text text-danger">email
+               must be more than 5 characters .</small>
+
+          </div>
+          <div class="form-group mb-4">
+            <label for="password">Password</label>
+            <input type="password" name="password" formControlName="password" id="password" class="form-control" placeholder="enter your passsword">
+
+            <span *ngIf="formGroup.controls?.password?.errors?.required &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password  is required<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password must be  8 character at least<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             maximum characters is 16 <br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             first character must be captil letter<br>
+             </span>
+             <!-- <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             passwords not match
+             </span> -->
+
+          </div>
+          <input name="login" id="login" class="btn btn-block login-btn" type="submit" value="Login">
+        </form>
+        <a href="#!" routerLink="./forgotPassword" class="forgot-password-link">Forgot password?</a>
+        <p class="login-wrapper-footer-text">Don't have an account? <a routerLink="./register" class="text-reset">Register here</a></p>
+      </div>
+    </div>
+    <div class="col-sm-6 px-0 d-none d-sm-block">
+      <img src="https://restaurantclicks.com/wp-content/uploads/2021/09/restaurants-knoxville.jpg" alt="login image" class="login-img">
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

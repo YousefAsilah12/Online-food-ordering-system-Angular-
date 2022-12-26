@@ -1,0 +1,25 @@
+<ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active"  aria-current="page"   (click)="LogClick()" >Login</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link"   aria-current="page" (click)="RegClick()">Register</a>
+  </li>
+</ul>
+
+
+<p>hello 2</p>
+<div class="container">
+  <div *ngIf="Register==true">
+    <app-customer-reg></app-customer-reg>
+  </div>
+
+  <div *ngIf="Login==true" class="marg">
+<p>hello </p>
+    <app-login></app-login>
+  </div>
+
+  <!-- <router-outlet name='child1'></router-outlet> -->
+
+</div>
+<!-- sideBar draft -->

@@ -1,0 +1,185 @@
+
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedCustomers()" [disabled]="!selectedCustomers || !selectedCustomers.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="customers" [rows]="10" [paginator]="true" [globalFilterFields]="['firstName','lastName','Birthdate','city']" responsiveLayout="scroll"
+        [(selection)]="selectedCustomers" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Customers</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id"> ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th>Image</th>
+                <th pSortableColumn="firstName"> First Name <p-sortIcon field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="lastName"> Last Name <p-sortIcon field="lastName"></p-sortIcon></th>
+                <th pSortableColumn="birthdate">Birthdate <p-sortIcon field="birthdate"></p-sortIcon></th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th pSortableColumn="city">City <p-sortIcon field="city"></p-sortIcon></th>
+                <th>homeNo</th>
+                <th>street</th>
+                <!-- <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="active">Status <p-sortIcon field="activce"></p-sortIcon></th>
+                <th pSortableColumn="supplier.companyName">Supplier <p-sortIcon field="supplier.companyName"></p-sortIcon></th> -->
+
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                </td>
+                <td>{{customer.id}}</td>
+                <td><img src="https://localhost:44318/images/users/{{customer.image}}" [alt]="customer.firstName" width="100" class="p-shadow-4" /></td>
+
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+                <td>{{customer.birthdate |  date:'dd/MM/yyyy'}}</td>
+                <td>{{customer.phone}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.city}}</td>
+                <td>{{customer.homeNo}}</td>
+                <td>{{customer.street}}</td>
+
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editCustomer(customer)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCustomer(customer)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{customers ? customers.length : 0 }} customers.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="customerDialog" [style]="{width: '450px'}" header="customer Details" [modal]="true" styleClass="p-fluid">
+
+    <ng-template pTemplate="content">
+      <div class="p-field">
+
+        <img  *ngIf="customer.image!=null" src="https://localhost:44318/images/users/{{customer.image}}"   [style]="{width: '450px'}" class="product-image img-fluid rounded border bg-light"  >
+</div>
+        <!-- <div class="p-field">
+          <h5>Basic with Auto</h5>
+          <p-fileUpload #fubauto mode="basic" name="demo[]"  accept="image/*"
+          maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Selecte image"></p-fileUpload>
+        </div> -->
+        <div class="p-field">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="file" accept="image/*" name="userImage" id="userImage" (change)="HandleFiles($event)" aria-describedby="inputGroupFileAddon01"
+                class="custom-file-input" >
+                <label class="custom-file-label upload-lbl" for="userImage" >
+                <span *ngIf="img !==null">{{img.name}} </span>
+                <span *ngIf="img ===null">select image  </span>
+
+
+                </label>
+                <span class="p-error" *ngIf="img ==null&&submitted">image required  </span>
+
+              </div>
+            </div>
+          </div>
+
+              <div class="col-md-4">
+                <img *ngIf="img" src="https://localhost:44318/images/Categories/{{category.image}}" id="image"  [style]="{width: '450px'}" class="product-image img-fluid rounded border bg-light" >
+              </div>
+       </div>
+
+        <div class="p-field">
+            <label for="firstName">first Name</label>
+            <input type="text" pInputText id="firstName" [(ngModel)]="customer.firstName" required autofocus />
+            <small class="p-error" *ngIf="submitted && !customer.firstName">lastName is required.</small>
+        </div>
+        <div class="p-field">
+          <label for="lastName">last Name</label>
+          <input type="text" pInputText id="lastName" [(ngModel)]="customer.lastName" required autofocus />
+          <small class="p-error" *ngIf="submitted && !customer.lastName">lastName is required.</small>
+      </div>
+      <div *ngIf="customer.id==null" class="p-field">
+        <label for="password">password</label>
+        <input type="password" pInputText id="password" [(ngModel)]="customer.password" required autofocus />
+        <small class="p-error" *ngIf="submitted && !customer.password">lastName is required.</small>
+    </div>
+
+
+      <div class="p-field">
+        <label for="birthdate">BithDate</label>
+        <p-calendar [(ngModel)]="date6" dateFormat="dd/mm/yy" [monthNavigator]="true"  [yearNavigator]="true" yearRange="2000:2030" inputId="birthdate"></p-calendar>
+        <!-- <p-calendar id="bithdate" placeholder="enter your birthdate"  dateFormat="dd/mm/yy" showIcon="true" required [(ngModel)]="customer.birthdate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1910:2030" inputId="navigators"></p-calendar> -->
+        <small class="p-error" *ngIf="submitted && !customer.birthdate">birthDate is required.</small>
+    </div>
+
+
+
+    <div class="p-field">
+      <label for="phone">phone</label>
+      <p-inputMask mask="(999) 999-9999" [(ngModel)]="customer.phone" minlength="10" maxlength="11" placeholder="(999) 999-9999"></p-inputMask>
+      <small class="p-error" *ngIf="submitted && !customer.phone">phone is required.</small>
+  </div>
+
+        <div class="p-field">
+            <label for="email">email</label>
+            <input type="email" pInputText id="email" [(ngModel)]="customer.email" required autofocus />
+            <small class="p-error" *ngIf="submitted && !customer.email">email is required.</small>
+
+          </div>
+        <div class="p-field">
+          <label for="email">city</label>
+          <p-dropdown id="city" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true" required></p-dropdown>
+                 <small class="p-error" *ngIf="submitted && !customer.email">city is required.</small>
+
+      </div>
+
+
+        <div class="p-field">
+          <label for="homeNo">homeNo</label>
+          <input type="number" pInputText id="homeNo" [(ngModel)]="customer.homeNo" required autofocus />
+          <small class="p-error" *ngIf="submitted && !customer.homeNo">home nubmer is required.</small>
+      </div>
+      <div class="p-field">
+        <label for="firstName">street</label>
+        <input type="text" pInputText id="street" [(ngModel)]="customer.street" required autofocus />
+        <small class="p-error" *ngIf="submitted && !customer.street">street is required.</small>
+    </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button
+           pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCustomer()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- [disabled]="customer.firstName==null||customer.street==null||customer.lastName==null||date6==null||customer.phone==null||customer.email==null||!customer.homeNo > 0 ||selectedCity==null" -->

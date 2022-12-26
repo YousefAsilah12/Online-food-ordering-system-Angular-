@@ -1,0 +1,17 @@
+/* nav{
+  margin: 0px;
+  padding: 0px;
+} */
+.removePadding{
+  padding: 0px !important;
+  margin: 0px  !important;
+}
+.p-sidebar{
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.collapse:not(.show)
+{
+  display: flex;
+}

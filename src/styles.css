@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/* @font-face {
+  font-family: "ARDECODE";
+  src: local("ARDECODE"), url(./assets/fonts/ARDECODE.TTF) format("truetype");
+} */
+/* @font-face {
+  font-family: "NOSURRENDERITALIC";
+  src: local("NOSURRENDERITALIC"), url(./assets/fonts/NO\ SURRENDER\ ITALIC.TTF) format("truetype");
+} */
+body{
+  overflow-x: hidden;
+}
+@import '~primeicons/primeicons.css';
+

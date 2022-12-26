@@ -1,0 +1,99 @@
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<div class="container margin box">
+	<!--   https://www.jerecho.com/codepen/nike-product-page/ -->
+	  <div class="product-image">
+		<!-- <img src="{{product.image}}" alt="" class="product-logo" width="50" height=""> -->
+		<img src="https://localhost:44318/images/Products/{{product?.image}}" alt="" class="product-pic" width="300px" height="300px">
+		<div class="dots">
+		  <a href="#!" class="active"><i>1</i></a>
+		  <!-- <a href="#!"><i>2</i></a>
+		  <a href="#!"><i>3</i></a>
+		  <a href="#!"><i>4</i></a> -->
+		</div>
+	  </div>
+
+	  <div class="product-details">
+		<header>
+		  <h1 class="title">{{product?.productName}}</h1>
+		  <span class="colorCat">{{product?.serialNumber}}</span>
+		  <div class="price">
+			<span class="before">${{product?.productPrice}}</span>
+			<span class="current">${{product.productPrice-(product.discount /100*product.productPrice ) }}</span>
+		  </div>
+		  <div class="rate">
+			<a href="#!" class="active">★</a>
+			<a href="#!" class="active">★</a>
+			<a href="#!" class="active">★</a>
+			<a href="#!">★</a>
+			<a href="#!">★</a>
+		  </div>
+		</header>
+		<article>
+		  <h5>Description</h5>
+      <p>{{product?.productDescription}}</p>
+		</article>
+		<div class="controls">
+		  <!-- <div class="color">
+			<h5>color</h5>
+			<ul>
+			  <li><a href="#!" class="colors color-bdot1 active"></a></li>
+			  <li><a href="#!" class="colors color-bdot2"></a></li>
+			  <li><a href="#!" class="colors color-bdot3"></a></li>
+			  <li><a href="#!" class="colors color-bdot4"></a></li>
+			  <li><a href="#!" class="colors color-bdot5"></a></li>
+			</ul>
+		  </div> -->
+		  <div class="size">
+			<h5>Stock Available </h5>
+      <br>
+			<a  class="option2">({{product?.stockQuanitity}})</a>
+		  </div>
+		  <div class="qty">
+			<h5>Order Qty </h5>
+			<a  class="option2">({{QuantityToOrder}})</a>
+
+      <!-- <ng-select id="selection" [(ngModel)]="selectedQty">
+        <ng-option *ngFor="let car of product?.stockQuanitity" value="1">{{product?.productName}}</ng-option>
+     </ng-select> -->
+
+		  </div>
+      <button  pButton       (click)="productPlus(product?.id)"  pRipple type="button" icon="pi pi-plus" class="p-button-rounded " [disabled]="QuantityToOrder>=product?.stockQuanitity" ></button>
+      <button   pButton     (click)="productMinus(product?.id)"  pRipple type="button" icon="pi pi-minus" class="p-button-rounded p-button-danger"  [disabled]="QuantityToOrder<=1"></button>
+
+		</div>
+		<div class="footer">
+		  <button type="button" (click)="addToCart( product.id)">
+			<img src="http://co0kie.github.io/codepen/nike-product-page/cart.png" alt="">
+			<span>add to cart</span>
+		  </button>
+		   <a href="#!"><img src="http://co0kie.github.io/codepen/nike-product-page/share.png" alt=""></a>
+		</div>
+	  </div>
+
+	</div>
+
+	<!-- <a href="https://www.youtube.com/watch?v=qGOxPVHfZuE" target="_blank" title="Watch me speed code this" style="position: fixed; bottom: 10px; right: 10px"><img src="http://co0kie.github.io/codepen/youtube.png" alt=""></a> -->

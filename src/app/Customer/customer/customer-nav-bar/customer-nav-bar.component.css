@@ -1,0 +1,43 @@
+.endclass{
+  justify-self: flex-end;
+}
+ ul:nth-last-child(1) {
+  justify-self: flex-end;
+}
+::ng-deep.ui-menubar .ui-menubar-root-list {
+  padding-left: 13em !important;
+}
+img#logo {
+  position: absolute;
+  left: 0;
+}
+/* #Cart-1{
+  float: right !important ;
+  position: relative !important ;
+  color: red;
+  border: red solid 10px !important;
+} */
+
+.img-round{
+  border-radius: 50%;
+}
+.name{
+  margin-top: 10px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.shadow{
+box-shadow:  0 .0rem 0.3rem rgba(248, 240, 166, 0.15) !important;
+}
+
+.btn-shad:hover{
+    box-shadow:  0 .0rem 0.3rem rgba(255, 255, 255, 0.15) !important;
+
+  }
+.photo{
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+.clas
+{
+  overflow-y: scroll;
+}

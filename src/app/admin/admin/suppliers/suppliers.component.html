@@ -1,0 +1,147 @@
+
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedsuppliers()" [disabled]="!selectedsuppliers|| !selectedsuppliers.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="suppliers" [rows]="10" [paginator]="true" [globalFilterFields]="['id','companyTitle','companyName','adrees','phone','email']" responsiveLayout="scroll"
+        [(selection)]="selectedsuppliers" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage suppliers</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                <th>Image</th>
+                <th pSortableColumn="companyTitle">companyTitle <p-sortIcon field="companyTitle"></p-sortIcon></th>
+                <th pSortableColumn="companyName">companyName <p-sortIcon field="companyName"></p-sortIcon></th>
+                <th>email</th>
+                <!-- <th>address</th> -->
+                <th>phone</th>
+                <th>fax</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-supplier>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="supplier"></p-tableCheckbox>
+                </td>
+                <td>{{supplier.id}}</td>
+                <td><img src="https://localhost:44318/images/Suppliers/{{supplier.image}}" [alt]="supplier.companyTitle+supplier.companyName" width="100" class="p-shadow-4" /></td>
+                <td>{{supplier?.companyTitle}}</td>
+                <td>{{supplier?.companyName}}</td>
+                <td>{{supplier?.email}}</td>
+                <!-- <td>{{supplier?.adrees}}</td> -->
+                <td>{{supplier?.phone}}</td>
+                <td>{{supplier?.fax}}</td>
+
+
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editsupplier(supplier)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletesupplier(supplier)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{suppliers ? suppliers.length : 0 }} suppliers .
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="supplierDialog" [style]="{width: '450px'}" header="supplier Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+
+        <img  *ngIf="supplier.image!=null" src="https://localhost:44318/images/Suppliers/{{supplier.image}}"   [style]="{width: '450px'}" class="product-image img-fluid rounded border bg-light"  >
+</div>
+
+
+        <div class="p-field">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="file" accept="image/*" name="userImage" id="userImage" (change)="HandleFiles($event)" aria-describedby="inputGroupFileAddon01"
+                class="custom-file-input" >
+                <label class="custom-file-label upload-lbl" for="userImage" >
+                <span *ngIf="img !==null">{{img.name}} </span>
+                <span *ngIf="img ===null">select image  </span>
+
+                </label>
+              </div>
+            </div>
+          </div>
+
+            <label for="companyTitle">companyTitle</label>
+            <input type="text" pInputText id="companyTitle" [(ngModel)]="supplier.companyTitle" required autofocus />
+            <small class="p-error" *ngIf="submitted && !supplier.companyTitle">companyTitle is required.</small>
+        </div>
+
+
+
+      <div class="p-field">
+        <label for="companyName">companyName</label>
+        <input type="text" pInputText id="companyName" [(ngModel)]="supplier.companyName" required autofocus />
+        <small class="p-error" *ngIf="submitted && !supplier.companyName">companyName is required.</small>
+    </div>
+
+
+    <div class="p-field">
+      <label for="adrees">adrees</label>
+      <input type="text" pInputText id="adrees" [(ngModel)]="supplier.adrees" required autofocus />
+      <small class="p-error" *ngIf="submitted && !supplier.adrees">adrees is required.</small>
+  </div>
+
+
+  <div class="p-field">
+    <label for="phone">phone</label>
+    <input type="text" pInputText id="phone" [(ngModel)]="supplier.phone" required autofocus />
+    <small class="p-error" *ngIf="submitted && !supplier.phone">phone is required.</small>
+</div>
+
+<div class="p-field">
+  <label for="fax">fax</label>
+  <input type="text" pInputText id="fax" [(ngModel)]="supplier.fax" required autofocus />
+  <small class="p-error" *ngIf="submitted && !supplier.fax">fax is required.</small>
+</div>
+
+
+<div class="p-field">
+  <label for="email">email</label>
+  <input type="text" pInputText id="email" [(ngModel)]="supplier.email" required autofocus />
+  <small class="p-error" *ngIf="submitted && !supplier.email">email is required.</small>
+</div>
+
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="savesupplier()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

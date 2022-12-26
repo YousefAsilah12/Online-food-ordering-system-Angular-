@@ -1,0 +1,27 @@
+<div class="container-fluid ">
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-3 mt-5 shadow-sm p-3 mb-3 bg-white rounded">
+          <div class="headLogSing ">
+              <div id="MyActiveDiv1" class="active myDiv" (click)="change('login')">
+                  <a>Login</a>
+                  <div class="linea_bajo_nom mt-3 mb-4"></div>
+              </div>
+              <div id="MyActiveDiv2" class="myDiv" (click)="change('singup')">
+                  <a>Singup</a>
+                  <div class="linea_bajo_nom mt-3 mb-4"></div>
+              </div>
+          </div>
+
+          <div class="reg mt-5 d-flex justify-content-center">
+              <div *ngIf="rgister=='login'">
+                  <app-login></app-login>
+              </div>
+              <div *ngIf="rgister=='singup'" class="scr">
+                <app-customer-reg></app-customer-reg>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

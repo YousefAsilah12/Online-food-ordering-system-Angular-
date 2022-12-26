@@ -1,0 +1,371 @@
+
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mr-2" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Discount" icon="fas fa-percent" class="p-button-help" (click)="discountfunction()" ></button>
+
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['productName','productPrice','category','active','supplier.companyName']" responsiveLayout="scroll"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon></th>
+                <th>Image</th>
+                <th pSortableColumn="productPrice">MainPrice <p-sortIcon field="product.Price"></p-sortIcon></th>
+                <th pSortableColumn="discount">discount <p-sortIcon field="discount"></p-sortIcon></th>
+                <th pSortableColumn="priceToBuy">priceToBuy <p-sortIcon field="priceToBuy"></p-sortIcon></th>
+                <th pSortableColumn="category.firstName">Category <p-sortIcon field="category.firstName"></p-sortIcon></th>
+                <th pSortableColumn="active">Status <p-sortIcon field="activce"></p-sortIcon></th>
+                <th pSortableColumn="supplier.companyName">Supplier <p-sortIcon field="supplier.companyName"></p-sortIcon></th>
+
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                </td>
+                <td>{{product.productName}}</td>
+                <td><img src="https://localhost:44318/images/Products/{{product.image}}" [alt]="product.productName" width="100" class="p-shadow-4" />
+                </td>
+                <td>₪ {{product.productPrice }}</td>
+                <td>{{product.discount | currency:'%'}}</td>
+                <td *ngIf="product.discount>0">{{product.productPrice-(product.discount /100*product.productPrice ) }}</td>
+                <td *ngIf="product.discount<=0">{{product.productPrice }}</td>
+                <td>{{product?.category?.firstName}}</td>
+                <td *ngIf="product?.active==true">
+                  <!-- <span [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toString() : '')">{{product?.active}}</span> -->
+                  <button (click)="EditProductStatus(product)" pButton pRipple type="button" label="Disable " class="p-button-raised p-button-danger"></button>
+
+                </td>
+                <td *ngIf="product?.active==false">
+                  <button  (click)="EditProductStatus(product)" pButton pRipple type="button" label="Publish" class="p-button-raised p-button-success"></button>
+
+                </td>
+                <td><span [class]="'product-badge status-' + (product.supplier?.companyName ? product.supplier?.companyName.toString() : '')">{{product?.supplier?.companyName}}</span></td>
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+
+                                                      <!-- ---------------------------- -->
+                                                          <!-- productDialog -->
+                                                      <!-- ---------------------------- -->
+
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <div class="p-field">
+
+        <img  *ngIf="product.image!=null" src="https://localhost:44318/images/Products/{{product.image}}"   [style]="{width: '450px'}" class="product-image img-fluid rounded border bg-light"  >
+</div>
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="file" accept="image/*" name="userImage" id="userImage" (change)="HandleFiles($event)" aria-describedby="inputGroupFileAddon01"
+                class="custom-file-input" >
+                <label class="custom-file-label upload-lbl" for="userImage" >
+                <span *ngIf="img !==null">{{img.name}} </span>
+                <span *ngIf="img ===null">select image  </span>
+
+                </label>
+              </div>
+            </div>
+          </div>
+        <div class="p-field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="product.productName" required autofocus />
+            <small class="p-error" *ngIf="submitted && !product.productName">Name is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="product.productDescription" required rows="3" cols="20"></textarea>
+            <small class="p-error" *ngIf="submitted && !product.productDescription">productDescription is required.</small>
+        </div>
+        <!-- <div class="p-field">
+            <label for="active">Inventory Status</label>
+            <p-dropdown inputId="inventoryStatus" [options]="statuses" placeholder="Select">
+
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'product-badge supplier.companyName-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div> -->
+        <div class="p-field">
+          <!-- <label for="supplier.companyName">Supplier </label>
+          <p-dropdown [(ngModel)]="supplier" inputId="supplier.companyName" [options]="products?.supplier?.Companyname"  placeholder="Select">
+              <ng-template let-option pTemplate="item">
+                  <span [class]="'product-badge status-' + supplier?.Companyname">{{option.label}}</span>
+              </ng-template>
+          </p-dropdown>-->
+          <p-dropdown [(ngModel)]="slectedCategory" [optionValue]="id" [options]="categories" placeholder="select a Category " optionLabel="firstName"
+          [showClear]="true"></p-dropdown>
+          <small class="p-error" *ngIf="submitted && !slectedCategory">category is required.</small>
+      </div>
+      <div class="p-field">
+        <p-dropdown [options]="suppliers"  [(ngModel)]="selectedSupplier" [optionValue]="id" placeholder="Select Product Supplier" optionLabel="companyName"
+        [showClear]="true"></p-dropdown>
+        <small class="p-error" *ngIf="submitted && !selectedSupplier">supplier is required.</small>
+
+</div>
+
+        <div class="p-field">
+            <label class="p-mb-3">Inventory status </label>
+            <div class="p-formgrid p-grid">
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category1" name="category" value="true" (click)="productTrue()" ></p-radioButton>
+                    <label for="category1">Active </label>
+                </div>
+                <div class="p-field-radiobutton p-col-6">
+                    <p-radioButton id="category2" name="category" (click)="productfalse()" value="false" ></p-radioButton>
+                    <label for="category2">Not Active</label>
+                </div>
+            </div>
+            <small class="p-error" *ngIf="submitted && !product.active">Inventory status is required.</small>
+
+        </div>
+
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="price">Price ₪</label>
+                <p-inputNumber id="price" [(ngModel)]="product.productPrice"   locale="en-US"></p-inputNumber>
+                <small class="p-error" *ngIf="submitted && !product.productPrice">price is required.</small>
+
+            </div>
+
+            <div  class="p-field p-col">
+              <label for="discount">discount %</label>
+              <p-inputNumber id="discount" [(ngModel)]="product.discount"  ></p-inputNumber>
+              <small class="p-error" *ngIf="submitted && !product.discount">discount is required.</small>
+
+          </div>
+
+            <div class="p-field p-col">
+                <label for="quantity">Quantity</label>
+                <p-inputNumber id="quantity" [(ngModel)]="product.stockQuanitity"></p-inputNumber>
+                <small class="p-error" *ngIf="submitted && !product.stockQuanitity">StockQunty is required.</small>
+
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+
+                                                      <!-- ---------------------------- -->
+                                                       <!-- AddDiscountForSelectedItems -->
+                                                      <!-- ---------------------------- -->
+
+<p-dialog [(visible)]="DiscountDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <p-table #dt [value]="selectedProducts" [rows]="10" [paginator]="true"  responsiveLayout="scroll"
+        [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+        >
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-1">Discount  </h5>
+                <span class="p-input-icon-left">
+                    <i class="fas fa-percent"></i>
+                    <input type="number" pInputText id="discount" [(ngModel)]="discount" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !discount">discount is  required.</small>
+                        </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon></th>
+                <th>Image</th>
+
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.productName}}</td>
+                <td><img src="{{product.image}}" [alt]="product.productName" width="100" class="p-shadow-4" ></td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+
+  </ng-template>
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDiscountDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="SaveDiscount()"></button>
+  </ng-template>
+</p-dialog>
+
+
+
+
+                                                      <!-- ---------------------------- -->
+                                                             <!-- menue of discount -->
+                                                      <!-- ---------------------------- -->
+
+<p-dialog [(visible)]="DiscountDialog2" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <button pButton pRipple label="Add Category Discount " icon="pi pi-plus" class="p-button-Success p-mr-2" (click)="AddDiscountByCategory()" ></button>
+    <button pButton pRipple label="Remove Discount  " icon="pi pi-trash" class="p-button-danger p-mr-2" (click)="removeDiscount()" [disabled]="! productsInSale|| !productsInSale.length"></button>
+
+  </ng-template>
+
+</p-dialog>
+
+
+
+                                                      <!-- ---------------------------- -->
+                                                          <!-- removeProductsTemplate -->
+                                                      <!-- ---------------------------- -->
+<p-dialog [(visible)]="RemoveDiscountDialog" [style]="{width: '900px'}" [style]="{height: '900px'}" header="Remove Products Discount" [modal]="true" styleClass="p-fluid">
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <div>
+            <p-dropdown [(ngModel)]="slectedDiscountCategory" [optionValue]="id" [options]="categories" placeholder="select a Category " optionLabel="firstName"
+            [showClear]="true"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !CategoryDiscount">category is required.</small>
+
+          </div>
+<br>
+            <button pButton pRipple label="removeCategoryDiscount" icon="pi pi-trash" class="p-button-danger p-mr-2" (click)="RemoveCategoryDiscount()" [disabled]="!slectedDiscountCategory"></button>
+        </ng-template>
+
+    </p-toolbar>
+
+</div>
+
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="removeDiscount" icon="pi pi-trash" class="p-button-danger p-mr-2" (click)="RemoveDiscountFromSelected()" [disabled]="!selectedToRemoveDiscount || !selectedToRemoveDiscount.length"></button>
+        </ng-template>
+
+    </p-toolbar>
+
+</div>
+
+  <ng-template pTemplate="content">
+    <p-table #dt [value]="productsInSale" [rows]="10" [paginator]="true" [globalFilterFields]="['productName','productPrice','category','active','supplier.companyName']" responsiveLayout="scroll"
+    [(selection)]="selectedToRemoveDiscount" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-2">Search for product </h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon></th>
+            <th>Image</th>
+            <th pSortableColumn="productPrice">Price <p-sortIcon field="productPrice"></p-sortIcon></th>
+            <th pSortableColumn="discount">discount <p-sortIcon field="discount"></p-sortIcon></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="product"></p-tableCheckbox>
+            </td>
+            <td>{{product.productName}}</td>
+            <td><img  src="https://localhost:44318/images/Products/{{product.image}}" [alt]="product.productName" width="100" class="p-shadow-4" />
+            </td>
+            <td>₪ {{product.productPrice }}</td>
+            <td>{{product.discount | currency:'%'}}</td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are {{products ? products.length : 0 }} products.
+        </div>
+    </ng-template>
+</p-table>
+
+  </ng-template>
+
+
+
+
+
+
+</p-dialog>
+
+                                                      <!-- ---------------------------- -->
+                                                          <!-- CategoryDiscount -->
+                                                      <!-- ---------------------------- -->
+
+<p-dialog [(visible)]="categoryDiscountDialog"  header="CategoryDiscount" [modal]="true" styleClass="p-fluid">
+
+  <ng-template pTemplate="content">
+<div>
+  <p-dropdown [(ngModel)]="slectedDiscountCategory" [optionValue]="id" [options]="categories" placeholder="select a Category " optionLabel="firstName"
+  [showClear]="true"></p-dropdown>
+  <small class="p-error" *ngIf="submitted && !CategoryDiscount">category is required.</small>
+
+</div>
+<div class="p-field">
+  <label for="discount">discount</label>
+  <input type="number" pInputText id="discount" [(ngModel)]="CategoryDiscountNumber" required autofocus />
+  <small class="p-error" *ngIf="submitted && !CategoryDiscountNumber">discount is required.</small>
+</div>
+
+</ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideCategoryDicountDialog()"></button>
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCategoryDiscoint()"></button>
+</ng-template>
+
+</p-dialog>
+
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

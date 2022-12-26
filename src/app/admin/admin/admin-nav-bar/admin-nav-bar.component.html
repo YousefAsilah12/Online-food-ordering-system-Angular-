@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark ">
+
+
+  <!-- <button class="primary" (click)="isShown()">  btn </button> -->
+  <p-button type="button" class="p-mr-2" (click)="visibleSidebar1 = true" icon="fas fa-bars"></p-button>
+  <p-sidebar [style]=" { 'padding':'0px' }" class="removePadding bg-warning" [blockScroll]="true" [showCloseIcon]="true"
+    [modal]="false" [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+    <app-side-bar-admin class="p-0 m-0"></app-side-bar-admin>
+  </p-sidebar>
+
+
+    <div class="text-white nav-item  collapse navbar-collapse justify-content-center">
+      <p class=" "> StudioHatna</p>
+    </div>
+
+    <div class="nav-item ">
+      <button pButton pRipple type="button" (click)="LogOut()" icon="pi pi-power-off" class="p-button-rounded p-button-danger"></button>
+    </div>
+
+</nav>

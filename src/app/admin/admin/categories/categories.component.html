@@ -1,0 +1,173 @@
+
+<p-toast key="Switched"></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedCategories()" [disabled]="!selectedCategories|| !selectedcategories.length"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="categories" [rows]="10" [paginator]="true" [globalFilterFields]="['id','firstName','productDescription']" responsiveLayout="scroll"
+        [(selection)]="selectedCategories" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage categories</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="firstName">Name <p-sortIcon field="firstName"></p-sortIcon></th>
+                <th>Image</th>
+                <th pSortableColumn="productDescription">productDescription <p-sortIcon field="productDescription"></p-sortIcon></th>
+
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-category>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="category"></p-tableCheckbox>
+                </td>
+                <td>{{category.id}}</td>
+                <td>{{category?.firstName}}</td>
+                <td><img src="https://localhost:44318/images/Categories/{{category.image}}" [alt]="category.firstName" width="100" class="p-shadow-4" /></td>
+                <td>{{category?.productDescription}}</td>
+
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editCategory(category)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="DeleteTemplateFunc(category)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{categories ? categories.length : 0 }} categories .
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<p-dialog [(visible)]="categoryDialog" [closable]="false" [style]="{width: '450px'}" header="category Details" [modal]="true" styleClass="p-fluid">
+
+  <ng-template pTemplate="content">
+    <form class="form-login " [formGroup]="formGroup"  (ngSubmit)="saveCategory()">
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+            <input formControlName="image" required type="file" accept="image/*" name="userImage" id="userImage" (change)="HandleFiles($event)" aria-describedby="inputGroupFileAddon01"
+            class="custom-file-input" >
+            <label class="custom-file-label upload-lbl" for="userImage" >
+            <span *ngIf="img !==null">{{img.name}} </span>
+            <span *ngIf="img ===null">select image  </span>
+
+            </label>
+          </div>
+        </div>
+
+      <span *ngIf="formGroup.controls?.image?.errors?.required &&
+      formGroup.controls?.image?.touched" class="form-text text-danger">
+        image is required<br>
+      </span>
+    </div>
+        <img *ngIf="img" src="https://localhost:44318/images/Categories/{{category.image}}" id="image"  [style]="{width: '450px'}" class="product-image img-fluid rounded border bg-light" >
+        <div class="p-field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" formControlName="firstName" required autofocus />
+            <span *ngIf="formGroup.controls?.firstName?.errors?.required &&
+            formGroup.controls?.firstName?.touched" class="form-text text-danger">
+              firstName is required<br>
+            </span>
+              </div>
+        <div class="p-field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea formControlName="productDescription" required rows="3" cols="20"></textarea>
+            <span *ngIf="formGroup.controls?.productDescription?.errors?.required &&
+            formGroup.controls?.productDescription?.touched" class="form-text text-danger">
+              Description is required<br>
+            </span>
+
+        </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple type="submit" label="Save" icon="pi pi-check" class="p-button-text" ></button>
+
+      </form>
+
+    </ng-template>
+
+
+
+</p-dialog>
+
+
+
+
+
+
+
+
+                                                    <!-- SwitchCategoryTemplate -->
+<p-dialog [(visible)]="switchCategoryDialog"   [style]="{height: '400px'}"  header="category Siwtch" [modal]="true" styleClass="p-fluid">
+
+  <div>
+    <p>select the Secound Category to Move the products to it  </p>
+  </div>
+  <ng-template pTemplate="content">
+
+  <p-dropdown [(ngModel)]="slectedSwitchCategory" [options]="CategoriesWithOutDeleted" placeholder="select a Category " optionLabel="firstName"
+  [showClear]="true"></p-dropdown>
+</ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideSwitchCategoryDialog()"></button>
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="switchCategoryFunc()"></button>
+</ng-template>
+
+</p-dialog>
+
+<p-dialog [(visible)]="CategoryDeleteTemplate"   [style]="{height: '400px'}"  header="category Siwtch" [modal]="true" styleClass="p-fluid">
+
+  <div>
+    <p>what Do You like to do with old the Category Products ?  </p>
+  </div>
+  <ng-template pTemplate="content">
+    <button pButton pRipple label="switchProductsCategory" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openSwitchCategoryDialog()"></button>
+    <button pButton pRipple label="DeleteCategoryProducts" icon="pi pi-trash" class="p-button-danger" (click)="deleteCategory()" [disabled]="!categories|| !categories.length"></button>
+
+</ng-template>
+<ng-template pTemplate="footer">
+  <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideCategoryDeleteTemplate()"></button>
+  <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="switchCategoryFunc()"></button> -->
+</ng-template>
+
+</p-dialog>
+
+
+<p-confirmDialog [style]="{width: '450px'}"> </p-confirmDialog>

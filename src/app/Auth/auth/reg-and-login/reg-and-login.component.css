@@ -1,0 +1,73 @@
+.headLogSing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.myDiv {
+  display: block !important;
+}
+
+.myDiv a {
+  display: block;
+}
+
+.linea_bajo_nom {
+  position: relative;
+  width: 160px;
+  float: left;
+  background-color: #999;
+  height: 2px;
+}
+
+.active {
+  color: #d41111;
+}
+
+.active .linea_bajo_nom {
+  position: relative;
+  width: 160px;
+  float: left;
+  background-color: #d41111;
+  height: 2px;
+}
+
+@media screen and(min-width:768px) {
+  .linea_bajo_nom {
+      position: relative;
+      width: 160px;
+      float: left;
+      background-color: #999;
+      height: 2px;
+  }
+  .active .linea_bajo_nom {
+      position: relative;
+      width: 160px;
+      float: left;
+      background-color: #d41111;
+      height: 2px;
+  }
+}
+
+@media screen and(min-width:678px) {
+  .linea_bajo_nom {
+      position: relative;
+      width: 120px;
+      float: left;
+      background-color: #999;
+      height: 2px;
+  }
+  .active .linea_bajo_nom {
+      position: relative;
+      width: 120px;
+      float: left;
+      background-color: #d41111;
+      height: 2px;
+  }
+}
+
+.scr {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

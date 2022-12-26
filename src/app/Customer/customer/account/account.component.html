@@ -1,0 +1,257 @@
+<p-toast></p-toast>
+
+<div class="container">
+  <div class="main-body bg">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="../">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+          </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+
+        <div class="row gutters-sm">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="https://localhost:44318/images/users/{{customer?.image}}"  class="rounded-circle" width="150">
+                  <div class="mt-3">
+                    <h4>{{customer?.firstName}}</h4>
+                    <p class="text-secondary mb-1">{{customer?.lastName}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">first Name</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.firstName}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">last Name</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.lastName}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Birthdate</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.birthdate |  date:'dd/MM/yyyy'}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Mobile</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.phone}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Email</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.email}}
+                  </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">HomeNo</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                     {{customer?.homeNo}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">street</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                   {{customer?.street}}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">city</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{customer?.city}}
+                  </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <a  class="btn btn-info " (click)="openEdit()">Edit</a>
+
+                  </div>
+                  <div class="col-sm-12">
+                    <p-button  (click)="confirm1()" icon="pi pi-user-edit" class="p-button-warning" label="Change Password" styleClass="mr-2 margTop"></p-button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row gutters-sm">
+              <div class="col-sm-6 mb-3">
+                <div class="card h-100">
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <div class="card h-100">
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+  <p-dialog [(visible)]="customerDialog" [style]="{width: '450px'}" header="customer Details" [modal]="true" styleClass="p-fluid">
+
+    <ng-template pTemplate="content">
+      <div class="p-field">
+
+        <img  *ngIf="customer.image!=null" src="https://localhost:44318/images/users/{{customer.image}}" [style]="{width: '450px'}" [alt]="customer.image" class="product-image margin-button" height="400px" width="200px" >
+</div>
+        <div class="p-field">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="file" accept="image/*" name="userImage" id="userImage" (change)="HandleFiles($event)" aria-describedby="inputGroupFileAddon01"
+                class="custom-file-input" >
+                <label class="custom-file-label upload-lbl" for="userImage" >
+                <span *ngIf="img !==null">{{img.name}} </span>
+                <span *ngIf="img ===null">select image  </span>
+
+                </label>
+              </div>
+            </div>
+          </div>
+
+              <div class="col-md-4">
+                <img *ngIf="img" class="img" src="{{img}}" width="50px" height="50px">
+              </div>
+       </div>
+
+        <div class="p-field">
+            <label for="firstName">first Name</label>
+            <input type="text" pInputText id="firstName" [(ngModel)]="customer.firstName" required autofocus />
+            <small class="p-error" *ngIf="submitted && !customer.firstName">first is required.</small>
+        </div>
+        <div class="p-field">
+          <label for="lastName">last Name</label>
+          <input type="text" pInputText id="lastName" [(ngModel)]="customer.lastName" required autofocus />
+          <small class="p-error" *ngIf="submitted && !customer.lastName">lastName is required.</small>
+      </div>
+      <div *ngIf="customer.id==null" class="p-field">
+        <label for="password">password</label>
+        <input type="password" pInputText id="password" [(ngModel)]="customer.password" required autofocus />
+        <small class="p-error" *ngIf="submitted && !customer.password">lastName is required.</small>
+    </div>
+
+
+      <div class="p-field">
+        <label for="birthdate">BithDate</label>
+        <p-calendar [(ngModel)]="date6" dateFormat="dd/mm/yy" [monthNavigator]="true"  [yearNavigator]="true" yearRange="2000:2030" inputId="birthdate"></p-calendar>
+        <!-- <p-calendar id="bithdate" placeholder="enter your birthdate"  dateFormat="dd/mm/yy" showIcon="true" required [(ngModel)]="customer.birthdate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1910:2030" inputId="navigators"></p-calendar> -->
+        <small class="p-error" *ngIf="submitted && !customer.birthdate">birthDate is required.</small>
+    </div>
+
+
+
+
+
+        <div class="p-field">
+            <label for="email">email</label>
+            <input type="email" pInputText id="email" [(ngModel)]="customer.email" required autofocus />
+            <small class="p-error" *ngIf="submitted && !customer.email">email is required.</small>
+
+          </div>
+
+
+          <div class="p-field">
+            <label for="phone">phone</label>
+            <p-inputMask mask="(999) 999-9999"   [(ngModel)]="customer.phone" minlength="10" maxlength="11" placeholder="(999) 999-9999"></p-inputMask>
+            <small class="p-error" *ngIf="submitted && !customer.phone">phone is required.</small>
+        </div>
+
+
+        <div class="p-field">
+          <label for="email">city</label>
+          <p-dropdown id="city" [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true" required ></p-dropdown>
+                 <small class="p-error" *ngIf="submitted && !customer.email">city is required.</small>
+
+      </div>
+
+        <div class="p-field">
+          <label for="homeNo">homeNo</label>
+          <input type="number" pInputText id="homeNo" [(ngModel)]="customer.homeNo" required autofocus />
+          <small class="p-error" *ngIf="submitted && !customer.homeNo">home nubmer is required.</small>
+      </div>
+
+      <div class="p-field">
+        <label for="firstName">street</label>
+        <input type="text" pInputText id="street" [(ngModel)]="customer.street" required autofocus />
+        <small class="p-error" *ngIf="submitted && !customer.street">street is required.</small>
+    </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEditDialog()"></button>
+        <button  pButton pRipple [disabled]="customer.firstName==null||customer.lastName==null||date6==null||customer.phone==null||customer.email==null||!customer.homeNo > 0 ||selectedCity==null" label="Save" icon="pi pi-check" class="p-button-text" (click)="updateUser()"></button>
+    </ng-template>
+</p-dialog>
+
+
+<p-dialog [(visible)]="ForgotPassDialog" [style]="{width: '450px'}" header="customer Details" [modal]="true" styleClass="p-fluid">
+
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="email">email</label>
+      <input type="email" pInputText id="email" [(ngModel)]="email" required autofocus />
+      <small class="p-error" *ngIf="submitted && !email">email is required.</small>
+
+    </div>
+</ng-template>
+
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideForgotPass()"></button>
+      <button [disabled]="email==null" pButton pRipple label="Change Password" icon="pi pi-check" class="p-button-text" (click)="changePass()"></button>
+  </ng-template>
+</p-dialog>
+
+
+
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}"> </p-confirmDialog>

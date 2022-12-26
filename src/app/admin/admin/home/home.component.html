@@ -1,0 +1,71 @@
+<p>home works!</p>
+
+<!-- <p-toast></p-toast>
+
+<div class="card">
+    <h5>Advanced</h5>
+    <p-fileUpload name="demo[]"  (onUpload)="onUpload($event)"
+            multiple="multiple" accept="image/*" maxFileSize="1000000">
+            <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+            </ng-template>
+    </p-fileUpload>
+
+</div>
+<button (click)="log()"> sss</button> -->
+<div class="p-d-flex p-jc-center">
+  <div class="p-mr-2">
+    <h3>allUsers</h3>
+    <p-knob [(ngModel)]="AllUsers" [readonly]="true" [size]="200"></p-knob>
+
+  </div>
+</div>
+
+
+<p-carousel [value]="templateView" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+  <ng-template pTemplate="header">
+      <h5>Data View </h5>
+  </ng-template>
+  <ng-template let-item pTemplate="item">
+    <h3>{{item.name}}</h3>
+    <p-knob [(ngModel)]="item.value" [readonly]="true"></p-knob>
+
+  </ng-template>
+</p-carousel>
+
+<!-- <p-carousel [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions" >
+
+  <ng-template  >
+    <div class=" product-item-content">
+      <h3>Customers</h3>
+      <p-knob [(ngModel)]="customerLength" [readonly]="true"></p-knob>
+      </div>
+  </ng-template>
+
+  <ng-template >
+    <div class="product-item-content">
+      <h3>Employees</h3>
+      <p-knob [(ngModel)]="Employeeslength" [readonly]="true"></p-knob>
+      </div>
+  </ng-template>
+
+  <ng-template >
+    <div class=" product-item-content" >
+      <h3>Admins</h3>
+      <p-knob [(ngModel)]="AdminsLength" [readonly]="true"></p-knob>
+      </div>
+  </ng-template>
+
+
+  <ng-template >
+    <div class=" product-item-content">
+      <h3>Orders</h3>
+      <p-knob [(ngModel)]="OrdersLength" [readonly]="true"></p-knob>
+    </div>
+  </ng-template>
+
+
+
+</p-carousel> -->

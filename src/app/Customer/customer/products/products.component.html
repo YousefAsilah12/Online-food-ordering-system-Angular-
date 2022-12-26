@@ -1,0 +1,105 @@
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<div class="card">
+  <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="productName"
+      [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+      <ng-template pTemplate="header">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+              <!-- <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown> -->
+              <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+
+              <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                  <i class="pi pi-search"></i>
+                  <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+              </span>
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+      </ng-template>
+
+
+      <ng-template let-product pTemplate="listItem">
+          <div class="p-col-12">
+              <div class="product-list-item">
+                <img src="https://localhost:44318/images/Products/{{product.image}}" [alt]="product.productName"
+                routerLink="../ProductDetails/{{product.id}}"/>
+                <div class="product-list-detail">
+                      <div class="product-name">{{product.productName}}</div>
+                      <div class="product-description">{{product.productDescription}}</div>
+                      <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>  rating **-->
+                      <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{category.firstName}}</span>
+                  </div>
+                  <div class="product-list-action">
+                      <span class="product-price">₪{{product.productPrice}}</span>
+                      <button type="button" pButton pRipple (click)="addToCart(product.id)" label="  " class="p-button-warning "
+                      icon="pi pi-shopping-cart" [disabled]="product.active == false"></button>
+                        <span [class]="'product-badge status-' + product.active.toString().toLowerCase()">{{product.active}}</span>
+                  </div>
+              </div>
+          </div>
+
+
+      </ng-template>
+
+
+      <ng-template let-product pTemplate="gridItem">
+        <div class="p-col-12 p-md-4">
+            <div class="product-grid-item card">
+                <div class="product-grid-item-top">
+                    <div>
+                        <i class="pi pi-tag product-category-icon"></i>
+                        <span class="product-category">{{category.firstName}}</span>
+                    </div>
+                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                </div>
+                <div class="product-grid-item-content  ">
+                  <div class="d-flex justify-content-center">
+                  <div   >
+                      <div *ngIf="product.discount > 0 " class="ribbon ribbon-top-right">
+                        <span>-{{product.discount}}%</span>
+                      </div>
+
+                      </div>
+                      <img src="https://localhost:44318/images/Products/{{product.image}}" [alt]="product.productName"
+                      routerLink="../ProductDetails/{{product.id}}" height="608px" width="1000px"/>
+
+                    </div>
+
+
+                  <div class="product-name">{{product.productName}}</div>
+                    <div class="product-description">{{product.productDescription}}</div>
+                    <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                </div>
+                <div class="product-grid-item-bottom">
+                    <span class="product-price">₪{{product.productPrice}}</span>
+
+                    <button type="button" pButton pRipple (click)="addToCart(product.id)" label="  " class="p-button-warning "
+                    icon="pi pi-shopping-cart" [disabled]="product.active == false"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+  </p-dataView>
+</div>

@@ -1,0 +1,606 @@
+<!-- <div class="tab-pane fade show active " id="home" role="tabpanel" aria-labelledby="home-tab">
+  <h3 class="register-heading">Customer register </h3>
+  <br>
+
+    <form class="form-login " [formGroup]="formGroup" (ngSubmit)="PostUser()">
+    <div class="row register-form">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input
+          type="text"
+          class="form-control"
+          placeholder="First Name *"
+          value=""
+          formControlName="firstName"
+          name="firstName"
+          ngModel
+          minlength="2"
+          maxlength="11"
+          />
+
+            <span *ngIf="formGroup.controls?.firstName?.errors?.required &&
+            formGroup.controls?.firstName?.touched" class="form-text text-danger">
+              first name is required<br>
+            </span>
+            <span *ngIf="formGroup.controls?.firstName?.errors?.minlength &&
+            formGroup.controls?.firstName?.touched" class="form-text text-danger">
+              first name must be  2 character at least<br>
+            </span>
+            <span *ngIf="formGroup.controls?.firstName?.errors?.maxlength &&
+            formGroup.controls?.firstName?.touched" class="form-text text-danger">
+              first name must be 11 characters<br>
+            </span>
+            <span *ngIf="formGroup.controls?.firstName?.errors?.pattern &&
+            formGroup.controls?.firstName?.touched" class="form-text text-danger">
+              first name must be A-Z characters only  <br>
+            </span>
+
+
+
+        </div>
+        <div class="form-group">
+          <input
+          type="text"
+          class="form-control"
+          placeholder="Last Name *"
+          value=""
+          formControlName="lastName"
+          name="lastName"
+          ngModel
+          required
+          minlength="2"
+          maxlength="11"
+
+          />
+          <span *ngIf="formGroup.controls?.lastName?.errors?.required &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+            last name is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.minlength &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+            last name must be  2 character at least<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.maxlength &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+          last name must be 11 characters<br>
+          </span>
+          <span *ngIf="formGroup.controls?.lastName?.errors?.pattern &&
+          formGroup.controls?.lastName?.touched" class="form-text text-danger">
+          last name must be A-Z characters only  <br>
+          </span>
+      </div>
+        <div class="form-group">
+          <input
+          type="password"
+          class="form-control"
+          placeholder="Password *"
+          value=""
+          formControlName="password"
+          name="password"
+          ngModel
+          required
+          maxlength="16"
+
+             />
+            <span *ngIf="formGroup.controls?.password?.errors?.required &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password  is required<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+               password must be  8 character at least<br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             maximum characters is 16 <br>
+             </span>
+             <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+             formGroup.controls?.password?.touched" class="form-text text-danger">
+             first character must be captil letter<br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             passwords not match
+             </span>
+
+
+
+
+        </div>
+        <div class="form-group">
+          <input
+          type="password"
+          class="form-control"
+          placeholder="Confirm Password *"
+          formControlName="ConfirmPassword"
+          value=""
+          name="passwordConfirm"
+          ngModel
+          required
+          maxlength="16"
+            />
+            <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.required &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+               ConfirmPassword is required<br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.minlength &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+               ConfirmPassword must be  8 character at least<br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.maxlength &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             maximum characters is 16 <br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.invalidPassword &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             first character must be captil letter<br>
+             </span>
+             <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+             formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+             passwords not match
+             </span>
+
+
+
+
+        </div>
+        <div class="form-group">
+          <input
+          type="date"
+          class="form-control"
+          placeholder="Birthdate *"
+          value=""
+          formControlName="birthdate"
+          name="birthdate"
+          ngModel
+
+             />
+             <span *ngIf="formGroup.controls?.birthdate?.errors?.required &&
+             formGroup.controls?.birthdate?.touched" class="form-text text-danger">
+               birthdate is required<br>
+             </span>
+
+
+        </div>
+
+        <div class="form-group">
+          <div class="maxl">
+            <label class="radio inline">
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <input
+          type="email"
+          class="form-control"
+          placeholder="Your Email *"
+         value=""
+         formControlName="email"
+         name="email"
+         ngModel
+
+         />
+          <span *ngIf="formGroup.controls?.email?.errors?.required &&
+          formGroup.controls?.email?.touched" class="form-text text-danger">
+            email is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.email?.errors?.minlength &&
+          formGroup.controls?.email?.touched" class="form-text text-danger">
+            at least 5 characters<br>
+          </span>
+          <span *ngIf="formGroup.controls?.email?.errors?.email &&
+          formGroup.controls?.email?.touched" class="form-text text-danger">
+            email not currect <br>
+          </span>
+
+
+
+        </div>
+        <div class="form-group">
+          <input
+          type="text"
+          minlength="10"
+          maxlength="10"
+          class="form-control"
+          placeholder="Your Phone *"
+          value=""
+          formControlName="phone"
+          name="phone"
+          ngModel
+          minlength="10"
+          maxlength="10"
+
+          />
+            <span *ngIf="formGroup.controls?.phone?.errors?.required &&
+            formGroup.controls?.phone?.touched" class="form-text text-danger">
+              phone is required<br>
+            </span>
+            <span *ngIf="formGroup.controls?.phone?.errors?.minlength &&
+            formGroup.controls?.phone?.touched" class="form-text text-danger">
+              phone number must be 10 numbers<br>
+            </span>
+            <span *ngIf="formGroup.controls?.phone?.errors?.maxlength &&
+            formGroup.controls?.phone?.touched" class="form-text text-danger">
+            phone number cannot be more than 10 numbers<br>
+            </span>
+            <span *ngIf="formGroup.controls?.phone?.errors?.pattern &&
+            formGroup.controls?.phone?.touched" class="form-text text-danger">
+              phone must be only numbers<br>
+            </span>
+
+
+        </div>
+        <div  class="form-group" >
+          <select
+          class="form-control"
+          formControlName="city"
+          name="city"
+          ngModel
+          aria-placeholder="Select a City *"
+          >
+                   <option ngValue="null" disabled selected>Select Category *</option>
+                   <option *ngFor="let c of cities" ngValue="{{c}}">{{c.name}}</option>
+            </select>
+
+            <span *ngIf="formGroup.controls?.city?.errors?.required &&
+            formGroup.controls?.city?.touched" class="form-text text-danger">
+              city is required<br>
+            </span>
+
+
+        </div>
+        <div class="form-group ">
+          <input
+          type="text"
+          class="form-control"
+          placeholder="Enter street name *"
+          value="" formControlName="street"
+          name="streetName"
+          ngModel
+          minlength="2"
+          maxlength="20"
+
+             />
+             <span *ngIf="formGroup.controls?.street?.errors?.required &&
+             formGroup.controls?.street?.touched" class="form-text text-danger">
+             street is required<br>
+             </span>
+             <span *ngIf="formGroup.controls?.street?.errors?.minlength &&
+             formGroup.controls?.street?.touched" class="form-text text-danger">
+             street name cannot be less than 2 characters<br>
+             </span>
+
+
+        </div>
+        <div class="form-group ">
+          <input
+          type="number"
+          class="form-control"
+          placeholder="Enter Home number *"
+          value=""
+          formControlName="homeNo"
+          name="homenumber"
+          ngModel
+          required
+
+             />
+             <span *ngIf="formGroup.controls?.homeNo?.errors?.required &&
+             formGroup.controls?.homeNo?.touched" class="form-text text-danger">
+               home number is required<br>
+             </span>
+
+        </div>
+
+        <input
+        type="submit"
+        class="btnRegister"
+        value="Register"
+        />
+      </div>
+
+    </div>
+  </form>
+
+</div> -->
+<form class="form-login " [formGroup]="formGroup" (ngSubmit)="PostUser()">
+
+  <div class="group" >
+    <input type="text" required
+    value=""
+    formControlName="firstName"
+    name="firstName"
+    ngModel
+    minlength="2"
+    maxlength="11"
+    >
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>first name</label>
+    <span *ngIf="formGroup.controls?.firstName?.errors?.required &&
+    formGroup.controls?.firstName?.touched" class="form-text text-danger">
+      first name is required<br>
+    </span>
+    <span *ngIf="formGroup.controls?.firstName?.errors?.minlength &&
+    formGroup.controls?.firstName?.touched" class="form-text text-danger">
+      first name must be  2 character at least<br>
+    </span>
+    <span *ngIf="formGroup.controls?.firstName?.errors?.maxlength &&
+    formGroup.controls?.firstName?.touched" class="form-text text-danger">
+      first name must be 11 characters<br>
+    </span>
+    <span *ngIf="formGroup.controls?.firstName?.errors?.pattern &&
+    formGroup.controls?.firstName?.touched" class="form-text text-danger">
+      first name must be A-Z characters only  <br>
+    </span>
+
+</div>
+
+<div class="group" >
+  <input type="text" required
+  value=""
+  formControlName="lastName"
+  name="lastName"
+  ngModel
+  minlength="2"
+  maxlength="11"
+  >
+  <span class="highlight"></span>
+  <span class="bar"></span>
+  <label>last name</label>
+  <span *ngIf="formGroup.controls?.lastName?.errors?.required &&
+  formGroup.controls?.lastName?.touched" class="form-text text-danger">
+    last name is required<br>
+  </span>
+  <span *ngIf="formGroup.controls?.lastName?.errors?.minlength &&
+  formGroup.controls?.firstName?.touched" class="form-text text-danger">
+    last name must be  2 character at least<br>
+  </span>
+  <span *ngIf="formGroup.controls?.lastName?.errors?.maxlength &&
+  formGroup.controls?.firstName?.touched" class="form-text text-danger">
+    last name must be 11 characters<br>
+  </span>
+  <span *ngIf="formGroup.controls?.lastName?.errors?.pattern &&
+  formGroup.controls?.firstName?.touched" class="form-text text-danger">
+    last name must be A-Z characters only  <br>
+  </span>
+
+</div>
+
+
+  <div class="group" >
+      <input
+       required
+      type="email"
+     value=""
+     formControlName="email"
+     name="email"
+     ngModel
+>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Email</label>
+      <span *ngIf="formGroup.controls?.email?.errors?.required &&
+      formGroup.controls?.email?.touched" class="form-text text-danger">
+        email is required<br>
+      </span>
+      <span *ngIf="formGroup.controls?.email?.errors?.minlength &&
+      formGroup.controls?.email?.touched" class="form-text text-danger">
+        at least 5 characters<br>
+      </span>
+      <span *ngIf="formGroup.controls?.email?.errors?.email &&
+      formGroup.controls?.email?.touched" class="form-text text-danger">
+        email not currect <br>
+      </span>
+
+  </div>
+
+
+  <div class="group">
+      <input type="password" required
+      type="password"
+      value=""
+      formControlName="password"
+      name="password"
+      ngModel
+      required
+      maxlength="16"
+
+         />
+        <span *ngIf="formGroup.controls?.password?.errors?.required &&
+         formGroup.controls?.password?.touched" class="form-text text-danger">
+           password  is required<br>
+         </span>
+         <span *ngIf="formGroup.controls?.password?.errors?.minlength &&
+         formGroup.controls?.password?.touched" class="form-text text-danger">
+           password must be  8 character at least<br>
+         </span>
+         <span *ngIf="formGroup.controls?.password?.errors?.maxlength &&
+         formGroup.controls?.password?.touched" class="form-text text-danger">
+         maximum characters is 16 <br>
+         </span>
+         <span *ngIf="formGroup.controls?.password?.errors?.invalidPassword &&
+         formGroup.controls?.password?.touched" class="form-text text-danger">
+         first character must be captil letter<br>
+         </span>
+         <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+         passwords not match
+         </span>
+
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>password</label>
+  </div>
+
+  <div class="group">
+      <input type="password" required
+      formControlName="ConfirmPassword"
+      value=""
+      name="passwordConfirm"
+      ngModel
+      required
+      maxlength="16"
+        />
+        <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.required &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+           ConfirmPassword is required<br>
+         </span>
+         <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.minlength &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+           ConfirmPassword must be  8 character at least<br>
+         </span>
+         <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.maxlength &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+         maximum characters is 16 <br>
+         </span>
+         <span *ngIf="formGroup.controls?.ConfirmPassword?.errors?.invalidPassword &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+         first character must be captil letter<br>
+         </span>
+         <span *ngIf="formGroup.controls?.ConfirmPassword?.value !=formGroup.controls?.password?.value &&
+         formGroup.controls?.ConfirmPassword?.touched" class="form-text text-danger">
+         passwords not match
+         </span>
+
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Confing Password</label>
+  </div>
+
+
+  <div class="group">
+
+      <input
+      required
+      type="date"
+      value=""
+      formControlName="birthdate"
+      name="birthdate"
+      ngModel
+
+         />
+         <span *ngIf="formGroup.controls?.birthdate?.errors?.required &&
+         formGroup.controls?.birthdate?.touched" class="form-text text-danger">
+           birthdate is required<br>
+         </span>
+
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label></label>
+  </div>
+  <div class="group">
+    <select
+    formControlName="city"
+    name="city"
+    ngModel
+    >
+             <option *ngFor="let c of cities" (click)="deleteLabel()" ngValue="{{c.name}}">{{c.name}}</option>
+      </select>
+
+      <span *ngIf="formGroup.controls?.city?.errors?.required &&
+      formGroup.controls?.city?.touched" class="form-text text-danger">
+        city is required<br>
+      </span>
+<span class="highlight"></span>
+      <span class="bar"></span>
+      <label id="lblCity">{{cityLabel}}  </label>
+  </div>
+
+  <div class="group">
+    <input
+     required
+     type="text"
+     minlength="10"
+     maxlength="10"
+     value=""
+     formControlName="phone"
+     name="phone"
+     ngModel
+     minlength="10"
+     maxlength="10"
+
+     />
+       <span *ngIf="formGroup.controls?.phone?.errors?.required &&
+       formGroup.controls?.phone?.touched" class="form-text text-danger">
+         phone is required<br>
+       </span>
+       <span *ngIf="formGroup.controls?.phone?.errors?.minlength &&
+       formGroup.controls?.phone?.touched" class="form-text text-danger">
+         phone number must be 10 numbers<br>
+       </span>
+       <span *ngIf="formGroup.controls?.phone?.errors?.maxlength &&
+       formGroup.controls?.phone?.touched" class="form-text text-danger">
+       phone number cannot be more than 10 numbers<br>
+       </span>
+       <span *ngIf="formGroup.controls?.phone?.errors?.pattern &&
+       formGroup.controls?.phone?.touched" class="form-text text-danger">
+         phone must be only numbers<br>
+       </span>
+
+
+
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>phone </label>
+</div>
+
+
+
+  <div class="group">
+      <input
+       required
+       type="text"
+       value="" formControlName="street"
+       name="streetName"
+       ngModel
+       minlength="2"
+       maxlength="20"
+
+          />
+          <span *ngIf="formGroup.controls?.street?.errors?.required &&
+          formGroup.controls?.street?.touched" class="form-text text-danger">
+          street is required<br>
+          </span>
+          <span *ngIf="formGroup.controls?.street?.errors?.minlength &&
+          formGroup.controls?.street?.touched" class="form-text text-danger">
+          street name cannot be less than 2 characters<br>
+          </span>
+
+
+
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>street name</label>
+  </div>
+
+
+  <div class="group">
+    <input
+     required
+     type="number"
+     value=""
+     formControlName="homeNo"
+     name="homenumber"
+     ngModel
+     required
+
+        />
+        <span *ngIf="formGroup.controls?.homeNo?.errors?.required &&
+        formGroup.controls?.homeNo?.touched" class="form-text text-danger">
+          home number is required<br>
+        </span>
+
+
+
+
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>home nyumber </label>
+</div>
+
+  <div class="d-flex justify-content-center">
+      <button class="btn btn-outline-danger">SingUp</button>
+  </div>
+</form>

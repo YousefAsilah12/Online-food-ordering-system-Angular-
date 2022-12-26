@@ -1,0 +1,22 @@
+<div class="container">
+
+  <div class="card ">
+    <div class="row">
+      <p-dataView #dv [value]="categories" [paginator]="true" [rows]="4" layout="grid" >
+        <ng-template class="" let-product pTemplate="gridItem">
+          <!-- <div class="col-10 "  (click)="travel(product.id)"> -->
+          <div class="col-md-6 " (click)="travel(product.id)">
+            <div class="product-grid-item card   ">
+              <div class="product-grid-item-content  ">
+                <img src="https://localhost:44318/images/Categories/{{product.image}}" [alt]="product.firstName"  height="400px" width="400px" />
+                <div class="product-name">{{product.firstName}}</div>
+                <div class="product-description">{{product.productDescription}}</div>
+              </div>
+            </div>
+
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>
